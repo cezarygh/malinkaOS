@@ -59,8 +59,10 @@ lib/
 ## Git workflow
 
 The full guide is in `docs/git-workflow.md`. The remote is `github.com/cezarygh/malinkaos`, and the repo is public.
-- `main` must always work. Don't commit directly to it. Branch off `main` using `feature/<name>`, `fix/<name>`, `docs/<name>`, `refactor/<name>` or `chore/<name>`, then merge through a pull request.
+- There are two permanent branches, and neither is ever deleted. `main` holds tagged releases only. `develop` is the integration branch. Don't commit directly to either.
+- Branch off `develop` using `feat/<name>`, `fix/<name>`, `docs/<name>`, `refactor/<name>` or `chore/<name>`, then open a pull request **into `develop`**.
+- A release is a pull request from `develop` into `main`, merged with a merge commit (not squash), then tagged on `main`. Hotfixes branch off `main` and are merged back into `develop` afterwards.
 - Use Conventional Commits (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`).
-- CI (`.github/workflows/ci.yml`) runs the format check, analyze and tests on pushes to `main` and on pull requests. Run the same checks locally before committing.
+- CI (`.github/workflows/ci.yml`) runs the format check, analyze and tests on pushes to `main` and `develop` and on pull requests. Run the same checks locally before committing.
 - Add user-facing changes to `## [Unreleased]` in `CHANGELOG.md`. For a release: move them into a version section, bump `version:` in `pubspec.yaml` (semver, and increase the `+build` number), then tag `vX.Y.Z`.
 - The repo-local git identity is the GitHub noreply address. Don't change it.

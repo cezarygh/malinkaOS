@@ -65,4 +65,4 @@ flutter test
 
 ## Contributing and versioning
 
-Work happens on branches and is merged into `main` through pull requests. Versions follow [semantic versioning](https://semver.org) and are listed in [CHANGELOG.md](CHANGELOG.md). See [docs/git-workflow.md](docs/git-workflow.md) for the full workflow.
+Work happens on feature branches that are merged into `develop` through pull requests. `develop` is merged into `main` for each release. Versions follow [semantic versioning](https://semver.org) and are listed in [CHANGELOG.md](CHANGELOG.md). See [docs/git-workflow.md](docs/git-workflow.md) for the full workflow.
