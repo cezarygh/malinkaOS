@@ -47,10 +47,10 @@ lib/
 ## Architecture
 
 - **Navigation and responsiveness** (`lib/shared/navigation/app_shell.dart`): `AppShell` is a `StatefulWidget` that holds `_selectedIndex`. The pages are listed in the `destinations` list (`NavDestination` objects), and both navigation widgets are built from that one list, so adding a page means adding one entry there. If the screen is narrower than `mobileBreakpoint` (600, defined in `shared/layout/breakpoints.dart`), it shows a bottom `NavigationBar`. Otherwise it shows a `NavigationRail` on the left. Pages live in an `IndexedStack`, so they keep their state when you switch pages.
-- **Responsive pages**: screens use `LayoutBuilder` to adapt to the width they actually get. For example, the dashboard shows 1, 2 or 3 card columns depending on `mobileBreakpoint` and `desktopBreakpoint`.
-- **Data flow** (see `features/projects/`): `api/projects_api.dart` returns `Future<List<Project>>`. `data/project.dart` is the model. The screen stores the Future in `initState` (never calls it inside `build`) and renders loading, error, empty and list states with a `FutureBuilder`. For now the api returns hardcoded data after a fake delay. **The database will plug in here:** only the api class body should change, and screens and models stay the same.
+- **Responsive pages**: when a screen needs to adapt, use `LayoutBuilder` to get the width it actually has, and use `mobileBreakpoint` and `desktopBreakpoint` from `shared/layout/breakpoints.dart` for the thresholds. (The pages are empty placeholders for now.)
+- **Data flow** (planned, not built yet): a feature's `api/` class returns a `Future` of model objects from `data/`. The screen stores the Future in `initState` (never calls it inside `build`) and renders loading, error, empty and list states with a `FutureBuilder`. **The database will plug in here:** only the api class body should change, and screens and models stay the same.
 - **Theme** (`lib/shared/theme/app_theme.dart`): light and dark `ThemeData` are both generated from one seed color, and the app uses `ThemeMode.system`. Read colors and text styles through `Theme.of(context)` instead of hardcoding them.
-- **Tests** (`test/widget_test.dart`): these set the test screen size to check both the mobile and the desktop layout, and they tap through all pages. Tap navigation items by icon, because label text such as "Projects" also appears on dashboard cards.
+- **Tests** (`test/widget_test.dart`): these set the test screen size to check both the mobile and the desktop layout, and they tap through all pages. Tap navigation items by icon, because each label also appears in the page's app bar and body.
 
 ## Conventions
 
