@@ -1,41 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/settings_section.dart';
-
-// The settings page. For now it only shows information; settings that
-// can be changed and saved will come later.
+// The Settings page. It is empty for now; content will be added later.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Scaffold gives the page its basic structure: an app bar at the top
+    // and a body below it.
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: const [
-          SettingsSection(
-            title: 'General',
-            children: [
-              ListTile(
-                leading: Icon(Icons.brightness_6),
-                title: Text('Theme'),
-                subtitle: Text('Follows your device setting'),
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: 'About',
-            children: [
-              ListTile(
-                leading: Icon(Icons.info_outline),
-                title: Text('Version'),
-                subtitle: Text('0.1.0'),
-              ),
-            ],
-          ),
-        ],
-      ),
+      body: const Center(child: Text('Settings')),
     );
   }
 }

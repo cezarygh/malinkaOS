@@ -14,13 +14,12 @@ Future<void> checkNavigation(WidgetTester tester) async {
   // Dashboard is the first page.
   expect(find.widgetWithText(AppBar, 'Dashboard'), findsOneWidget);
 
-  // Tap the icons rather than the labels, because the word "Projects"
-  // also appears on a dashboard card.
+  // Tap the icons rather than the labels, because each label also
+  // appears in the page's app bar and body.
   await tester.tap(find.byIcon(Icons.folder_outlined));
-  // pumpAndSettle waits until animations and the fake loading are done.
+  // pumpAndSettle waits until the page-switch animations are done.
   await tester.pumpAndSettle();
   expect(find.widgetWithText(AppBar, 'Projects'), findsOneWidget);
-  expect(find.text('Website redesign'), findsOneWidget);
 
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
