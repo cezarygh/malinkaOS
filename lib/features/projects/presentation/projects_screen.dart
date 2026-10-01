@@ -37,9 +37,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
     // After an await the page might be gone, so check before using context.
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Project saved')),
-    );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Project saved')));
   }
 
   @override

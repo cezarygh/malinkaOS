@@ -4,7 +4,6 @@ class Malinkadb {
   static Database? _database;
 
   static Future<Database> get database async {
-
     _database ??= await openDatabase(
       'malinka.db',
       version: 1,

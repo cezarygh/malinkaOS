@@ -43,15 +43,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: _projects.isEmpty
           ? const Center(child: Text('No projects yet'))
           : ListView.builder(
-        itemCount: _projects.length,
-        itemBuilder: (context, index) {
-          final project = _projects[index];
-          return ListTile(
-            title: Text(project.name),
-            subtitle: Text(project.description),
-          );
-        },
-      ),
+              itemCount: _projects.length,
+              itemBuilder: (context, index) {
+                final project = _projects[index];
+                return ListTile(
+                  title: Text(project.name),
+                  subtitle: Text(project.description),
+                );
+              },
+            ),
     );
   }
 }
