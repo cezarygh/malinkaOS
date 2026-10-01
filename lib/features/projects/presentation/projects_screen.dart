@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../api/projects_api.dart';
 import '../data/project.dart';
-import 'widgets/project_tile.dart';
+import '../data/project_repository.dart';
 
-// Shows the list of projects. The data flow is:
-//   ProjectsApi (api/)  ->  List<Project> (data/)  ->  this screen
+// The Projects page: a small form for creating a new project.
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({super.key});
 
@@ -14,53 +12,56 @@ class ProjectsScreen extends StatefulWidget {
 }
 
 class _ProjectsScreenState extends State<ProjectsScreen> {
-  final ProjectsApi _api = ProjectsApi();
+  final _nameController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
-  // We store the Future so the data is loaded only once. If we called
-  // fetchProjects() inside build(), it would reload on every rebuild.
-  late Future<List<Project>> _projectsFuture;
-
+  // Controllers must be cleaned up when the page is removed.
   @override
-  void initState() {
-    super.initState();
-    _projectsFuture = _api.fetchProjects();
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    final name = _nameController.text.trim();
+    final description = _descriptionController.text.trim();
+    if (name.isEmpty) return;
+
+    await ProjectRepository.insert(
+      Project(name: name, description: description),
+    );
+
+    _nameController.clear();
+    _descriptionController.clear();
+
+    // After an await the page might be gone, so check before using context.
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Project saved')));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Projects')),
-      // FutureBuilder rebuilds when the Future finishes, so we can show
-      // a spinner while loading, an error if it fails, or the data.
-      body: FutureBuilder<List<Project>>(
-        future: _projectsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('Could not load projects: ${snapshot.error}'),
-            );
-          }
-
-          final List<Project> projects = snapshot.data ?? [];
-
-          if (projects.isEmpty) {
-            return const Center(child: Text('No projects yet.'));
-          }
-
-          // ListView.builder only builds the rows that are visible,
-          // which keeps long lists fast.
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: projects.length,
-            itemBuilder: (context, index) {
-              return ProjectTile(project: projects[index]);
-            },
-          );
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(labelText: 'Name'),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(labelText: 'Description'),
+            ),
+            const SizedBox(height: 16),
+            FilledButton(onPressed: _save, child: const Text('Create project')),
+          ],
+        ),
       ),
     );
   }

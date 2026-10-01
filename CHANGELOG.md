@@ -7,16 +7,4 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-09-30
-
-### Added
-- Responsive app shell: bottom navigation bar on mobile, navigation rail on desktop.
-- Dashboard page with summary cards in a responsive grid.
-- Projects page that loads mock projects through `ProjectsApi`.
-- Settings page with grouped sections.
-- Light and dark theme from a single seed color.
-- Widget tests for the mobile and desktop layouts.
-- GitHub Actions CI (format check, analyze, tests).
-
-[Unreleased]: https://github.com/cezarygh/malinkaos/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/cezarygh/malinkaos/releases/tag/v0.1.0
+[Unreleased]: https://github.com/cezarygh/malinkaos/commits/HEAD

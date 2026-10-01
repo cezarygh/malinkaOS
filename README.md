@@ -7,9 +7,7 @@ A cross-platform Flutter app for keeping track of projects, built as a learning 
 ## Features
 
 - **Responsive navigation**: a bottom navigation bar on phones and a side navigation rail on wider screens (the switch happens at 600 px).
-- **Dashboard**: summary cards that rearrange into 1, 2 or 3 columns depending on the available width.
-- **Projects**: a list of projects loaded through an API layer (currently mock data, ready to be swapped for a database).
-- **Settings**: grouped settings and app info.
+- **Dashboard**, **Projects** and **Settings** pages: empty placeholders for now, ready to be filled in.
 - Light and dark theme that follows the device setting.
 
 ## Tech
@@ -65,4 +63,4 @@ flutter test
 
 ## Contributing and versioning
 
-Work happens on branches and is merged into `main` through pull requests. Versions follow [semantic versioning](https://semver.org) and are listed in [CHANGELOG.md](CHANGELOG.md). See [docs/git-workflow.md](docs/git-workflow.md) for the full workflow.
+Work happens on feature branches that are merged into `develop` through pull requests. `develop` is merged into `main` for each release. Versions follow [semantic versioning](https://semver.org) and are listed in [CHANGELOG.md](CHANGELOG.md). See [docs/git-workflow.md](docs/git-workflow.md) for the full workflow.

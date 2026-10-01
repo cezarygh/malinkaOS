@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:malinkaos/app.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 // Sets the size of the fake test screen, and resets it after the test.
 void setScreenSize(WidgetTester tester, Size size) {
@@ -14,13 +15,12 @@ Future<void> checkNavigation(WidgetTester tester) async {
   // Dashboard is the first page.
   expect(find.widgetWithText(AppBar, 'Dashboard'), findsOneWidget);
 
-  // Tap the icons rather than the labels, because the word "Projects"
-  // also appears on a dashboard card.
+  // Tap the icons rather than the labels, because each label also
+  // appears in the page's app bar and body.
   await tester.tap(find.byIcon(Icons.folder_outlined));
-  // pumpAndSettle waits until animations and the fake loading are done.
+  // pumpAndSettle waits until the page-switch animations are done.
   await tester.pumpAndSettle();
   expect(find.widgetWithText(AppBar, 'Projects'), findsOneWidget);
-  expect(find.text('Website redesign'), findsOneWidget);
 
   await tester.tap(find.byIcon(Icons.settings_outlined));
   await tester.pumpAndSettle();
@@ -28,6 +28,11 @@ Future<void> checkNavigation(WidgetTester tester) async {
 }
 
 void main() {
+  setUpAll(() {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  });
+
   testWidgets('mobile layout uses a bottom NavigationBar', (tester) async {
     setScreenSize(tester, const Size(400, 800));
     await tester.pumpWidget(const App());
