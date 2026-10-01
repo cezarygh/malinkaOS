@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:malinkaos/app.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 // Sets the size of the fake test screen, and resets it after the test.
 void setScreenSize(WidgetTester tester, Size size) {
@@ -27,6 +28,11 @@ Future<void> checkNavigation(WidgetTester tester) async {
 }
 
 void main() {
+  setUpAll(() {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  });
+
   testWidgets('mobile layout uses a bottom NavigationBar', (tester) async {
     setScreenSize(tester, const Size(400, 800));
     await tester.pumpWidget(const App());
