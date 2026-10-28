@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:malinkaos/app.dart';
+import 'package:malinkaos/shared/navigation/app_bottom_bar.dart';
+import 'package:malinkaos/shared/navigation/app_side_bar.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 // Sets the size of the fake test screen, and resets it after the test.
@@ -33,23 +35,23 @@ void main() {
     databaseFactory = databaseFactoryFfi;
   });
 
-  testWidgets('mobile layout uses a bottom NavigationBar', (tester) async {
+  testWidgets('mobile layout uses the floating AppBottomBar', (tester) async {
     setScreenSize(tester, const Size(400, 800));
     await tester.pumpWidget(const App());
     await tester.pumpAndSettle();
 
-    expect(find.byType(NavigationBar), findsOneWidget);
-    expect(find.byType(NavigationRail), findsNothing);
+    expect(find.byType(AppBottomBar), findsOneWidget);
+    expect(find.byType(AppSideBar), findsNothing);
     await checkNavigation(tester);
   });
 
-  testWidgets('desktop layout uses a side NavigationRail', (tester) async {
+  testWidgets('desktop layout uses the AppSideBar', (tester) async {
     setScreenSize(tester, const Size(1200, 800));
     await tester.pumpWidget(const App());
     await tester.pumpAndSettle();
 
-    expect(find.byType(NavigationRail), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byType(AppSideBar), findsOneWidget);
+    expect(find.byType(AppBottomBar), findsNothing);
     await checkNavigation(tester);
   });
 }
