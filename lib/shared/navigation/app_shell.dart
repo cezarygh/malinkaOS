@@ -4,6 +4,9 @@ import '../../features/dashboard/presentation/dashboard_screen.dart';
 import '../../features/projects/presentation/projects_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../layout/breakpoints.dart';
+import '../theme/nav_colors.dart';
+import 'app_bottom_bar.dart';
+import 'app_side_bar.dart';
 import 'nav_destination.dart';
 
 // The pages in the app, in the order they appear in the navigation.
@@ -30,7 +33,7 @@ const List<NavDestination> destinations = [
 ];
 
 // The "frame" around every page. It holds the navigation and decides
-// whether to show a bottom bar (mobile) or a side rail (desktop).
+// whether to show a bottom bar (mobile) or a side bar (desktop).
 //
 // It is a StatefulWidget because it must remember which page is selected.
 class AppShell extends StatefulWidget {
@@ -68,44 +71,41 @@ class _AppShellState extends State<AppShell> {
     }
   }
 
-  // Mobile: the page fills the screen with a navigation bar at the bottom.
+  // Mobile: the page fills the screen with a floating bar at the bottom.
   Widget _buildMobileLayout(Widget pages) {
     return Scaffold(
+      // extendBody lets the page continue behind the floating bar, so you
+      // can see the page around the rounded pill. Lists still get enough
+      // bottom space to scroll their last item above the bar.
+      extendBody: true,
       body: pages,
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: AppBottomBar(
+        destinations: destinations,
         selectedIndex: _selectedIndex,
-        onDestinationSelected: _onDestinationSelected,
-        destinations: [
-          for (final destination in destinations)
-            NavigationDestination(
-              icon: Icon(destination.icon),
-              selectedIcon: Icon(destination.selectedIcon),
-              label: destination.label,
-            ),
-        ],
+        onSelected: _onDestinationSelected,
       ),
     );
   }
 
-  // Desktop: a navigation rail on the left, the page on the right.
+  // Desktop: a side bar card on the left, the page on the right.
   Widget _buildDesktopLayout(Widget pages) {
     return Scaffold(
+      backgroundColor: NavColors.of(context).background,
       body: Row(
+        // start: the side bar sits at the top instead of the middle.
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          NavigationRail(
-            selectedIndex: _selectedIndex,
-            onDestinationSelected: _onDestinationSelected,
-            labelType: NavigationRailLabelType.all,
-            destinations: [
-              for (final destination in destinations)
-                NavigationRailDestination(
-                  icon: Icon(destination.icon),
-                  selectedIcon: Icon(destination.selectedIcon),
-                  label: Text(destination.label),
-                ),
-            ],
+          SafeArea(
+            right: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 12, 16),
+              child: AppSideBar(
+                destinations: destinations,
+                selectedIndex: _selectedIndex,
+                onSelected: _onDestinationSelected,
+              ),
+            ),
           ),
-          const VerticalDivider(width: 1),
           // Expanded makes the page take up all the remaining width.
           Expanded(child: pages),
         ],
