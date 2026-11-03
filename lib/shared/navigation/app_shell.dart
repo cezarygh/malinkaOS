@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/dashboard/presentation/dashboard_screen.dart';
-import '../../features/projects/presentation/projects_screen.dart';
+import '../../features/project/presentation/project_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../layout/breakpoints.dart';
 import '../theme/nav_colors.dart';
@@ -22,7 +22,7 @@ const List<NavDestination> destinations = [
     label: 'Projects',
     icon: Icons.folder_outlined,
     selectedIcon: Icons.folder,
-    screen: ProjectsScreen(),
+    screen: ProjectScreen(),
   ),
   NavDestination(
     label: 'Settings',

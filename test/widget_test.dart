@@ -8,7 +8,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Sets the size of the fake test screen, and resets it after the test.
 void setScreenSize(WidgetTester tester, Size size) {
   tester.view.physicalSize = size;
-  tester.view.devicePixelRatio = 1.0;
+tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
 }
 
