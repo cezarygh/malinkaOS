@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   sqflite: ^2.4.4
+  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   flutter_test:

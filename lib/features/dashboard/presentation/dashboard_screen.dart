@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../projects/data/project.dart';
-import '../../projects/data/project_repository.dart';
+import '../../project/data/project.dart';
+import '../../project/data/project_repository.dart';
 
 // The Dashboard page: shows all saved projects.
 class DashboardScreen extends StatefulWidget {
